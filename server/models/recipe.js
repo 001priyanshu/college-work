@@ -12,14 +12,19 @@ const recipeSchema = new mongoose.Schema(
     },
     ingredients: [
       {
+        name: String,
+        quantity: String,
+      },
+    ],
+    instruction: [
+      {
         type: String,
       },
     ],
-    instruction: String,
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Comment",
       },
     ],
     contentUrl: String,

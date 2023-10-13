@@ -24,6 +24,7 @@ exports.login = async (req, res) => {
     if (isPasswordValid) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
       return res.status(200).json({
+        message: "User Successfully logged In",
         token,
         user: user,
       });
@@ -43,7 +44,6 @@ exports.login = async (req, res) => {
 exports.register = async (req, res) => {
   try {
     const { email, password, name, recipe } = req.body;
-    console.log(req.body);
     const user = await User.findOne({ email });
 
     if (user) {

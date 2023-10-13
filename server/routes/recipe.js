@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const requireLogin = require("../middleware/auth");
+const authentication = require("../middleware/auth");
 const {
   createRecipe,
   updateRecipe,
@@ -8,9 +8,9 @@ const {
   getAllRecipe,
 } = require("../controllers/recipe");
 
-router.post("/createRecipe", createRecipe);
-router.post("/updateRecipe", updateRecipe);
-router.post("/deleteRecipe", deleteRecipe);
-router.post("/getAllRecipes", getAllRecipe);
+router.post("/createRecipe", authentication, createRecipe);
+router.post("/updateRecipe", authentication, updateRecipe);
+router.get("/deleteRecipe/:id", authentication, deleteRecipe);
+router.get("/getAllRecipes", authentication, getAllRecipe);
 
 module.exports = router;
