@@ -16,7 +16,7 @@ exports.createRecipe = async (req, res) => {
     });
 
     await recipe.save();
-    return res.status(500).json({
+    return res.status(200).json({
       message: "Successfully created recipe!",
       recipe,
     });
@@ -42,7 +42,7 @@ exports.updateRecipe = async (req, res) => {
     recipe.category = category;
 
     await recipe.save();
-    return res.status(500).json({
+    return res.status(200).json({
       message: "Successfully updated recipe!",
       recipe,
     });
@@ -59,7 +59,7 @@ exports.deleteRecipe = async (req, res) => {
     const { id } = req.params;
     await Recipe.findByIdAndDelete({ _id: id });
     await Comment.deleteMany({ recipeId: id });
-    return res.status(500).json({
+    return res.status(200).json({
       message: "Successfully deleted recipe!",
     });
   } catch (error) {
