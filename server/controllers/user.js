@@ -43,7 +43,7 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
   try {
-    const { email, password, name, recipe } = req.body;
+    const { email, password, name } = req.body;
     const user = await User.findOne({ email });
 
     if (user) {
@@ -58,7 +58,7 @@ exports.register = async (req, res) => {
       email: email,
       password: hashedPassword,
       name: name,
-      favRecipe: [recipe],
+      favRecipe: [],
     });
 
     await newUser.save();
