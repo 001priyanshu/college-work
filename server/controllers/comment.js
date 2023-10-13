@@ -1,13 +1,20 @@
+const Comment = require("../models/comment");
 const Recipe = require("../models/recipe");
 
 exports.addComment = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = req.user;
-    const recipes = await Recipe.find({ userId: user._id });
+    const { content } = req.body;
+    const comment = await Comment.create({
+      userId: req.user._id,
+      recipeId: id,
+      content,
+    });
+    const recipe = await Recipe.findById({ _id: id });
+    recipe.comments.push(comment._id);
+    await recipe.save();
     return res.status(200).json({
-      message: "Success!",
-      allRecipes,
+      message: "Successfull",
     });
   } catch (error) {
     return res.status(500).json({

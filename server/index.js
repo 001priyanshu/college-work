@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.use("/api/user", require("./routes/user"));
 app.use("/api/recipe", require("./routes/recipe"));
+app.use("/api/comment", require("./routes/comment"));
 
 
 app.listen(port, (err) => {
