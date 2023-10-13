@@ -19,7 +19,7 @@ exports.login = async (req, res) => {
       });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = bcrypt.compare(password, user.password);
 
     if (isPasswordValid) {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
@@ -63,7 +63,7 @@ exports.register = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Signup successful",
       user: newUser,
     });
@@ -77,6 +77,14 @@ exports.register = async (req, res) => {
 
 exports.addFavRecipe = async (req, res) => {
   try {
+    const user = req.user;
+    const { id } = req.params;
+    const loggedInUser = await User.findById({ _id: user._id });
+    loggedInUser.favRecipes.push(id);
+    await loggedInUser.save();
+    return res.status(200).json({
+      message: "Success!",
+    });
   } catch (error) {
     return res.status(500).json({
       message: "Internal server error",

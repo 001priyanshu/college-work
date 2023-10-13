@@ -6,7 +6,6 @@ exports.createRecipe = async (req, res) => {
     const { recipeName, ingredients, instruction, category, contentUrl } =
       req.body;
     const user = req.user;
-    console.log(user);
     const recipe = await Recipe.create({
       recipeName,
       userId: user._id,
@@ -31,6 +30,22 @@ exports.createRecipe = async (req, res) => {
 
 exports.updateRecipe = async (req, res) => {
   try {
+    const { recipeName, ingredients, instruction, category, contentUrl } =
+      req.body;
+
+    const { id } = req.params;
+    const recipe = await Recipe.findById({ _id: id });
+    recipe.recipeName = recipeName;
+    recipe.ingredients = ingredients;
+    recipe.instruction = instruction;
+    recipe.contentUrl = contentUrl;
+    recipe.category = category;
+
+    await recipe.save();
+    return res.status(500).json({
+      message: "Successfully updated recipe!",
+      recipe,
+    });
   } catch (error) {
     return res.status(500).json({
       message: "Internal server error",

@@ -9,7 +9,7 @@ const {
 } = require("../controllers/recipe");
 
 router.post("/createRecipe", authentication, createRecipe);
-router.post("/updateRecipe", authentication, updateRecipe);
+router.put("/updateRecipe/:id", authentication, updateRecipe);
 router.get("/deleteRecipe/:id", authentication, deleteRecipe);
 router.get("/getAllRecipes", authentication, getAllRecipe);
 
