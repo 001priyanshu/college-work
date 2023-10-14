@@ -26,8 +26,8 @@ const recipeSchema = new mongoose.Schema(
         ref: "Comment",
       },
     ],
-    photoUrl: String,
-    description:String,
+    imageUrl: String,
+    description: String,
   },
   {
     timestamps: true,
