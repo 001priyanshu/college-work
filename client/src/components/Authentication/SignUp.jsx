@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-const SignUp = ({ handleSubmit, error, userId, setUserId }) => {
-
+const SignUp = ({ handleSubmit, error, values, setValues }) => {
 
     return (
         <>
@@ -17,9 +16,35 @@ const SignUp = ({ handleSubmit, error, userId, setUserId }) => {
                                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 id="name"
                                 type="text"
-                                placeholder="Enter userId"
-                                value={userId}
-                                onChange={(e) => setUserId(e.target.value)}
+                                placeholder="Enter your name"
+                                value={values.name}
+                                onChange={(e) => setValues({ ...values, name: e.target.value })}
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                                Email Address
+                            </label>
+                            <input
+                                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="email"
+                                type="email"
+                                placeholder="Enter your email"
+                                value={values.email}
+                                onChange={(e) => setValues({ ...values, email: e.target.value })}
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                                Password
+                            </label>
+                            <input
+                                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="password"
+                                type="password"
+                                placeholder="Enter your password"
+                                value={values.password}
+                                onChange={(e) => setValues({ ...values, password: e.target.value })}
                             />
                         </div>
                         {error && <p className="text-red-500 mb-4">{error}</p>}

@@ -9,10 +9,11 @@ const {
   getMyRecipe,
 } = require("../controllers/recipe");
 
-router.post("/createRecipe", authentication, createRecipe);
+
+router.post("/createRecipe", createRecipe);
 router.put("/updateRecipe/:id", authentication, updateRecipe);
-router.get("/deleteRecipe/:id", authentication, deleteRecipe);
-router.get("/getAllRecipes", authentication, getAllRecipe);
+router.delete("/deleteRecipe/:id", deleteRecipe);
+router.get("/getAllRecipes", getAllRecipe);
 router.get("/getMyRecipes", authentication, getMyRecipe);
 
 module.exports = router;

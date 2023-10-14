@@ -3,16 +3,17 @@ const Comment = require("../models/comment");
 
 exports.createRecipe = async (req, res) => {
   try {
-    const { recipeName, ingredients, instruction, category, contentUrl } =
+    const { name, description,ingredients, instructions,imageUrl } =
       req.body;
-    const user = req.user;
+    const user = req.body.userOwner;
+    console.log(user);
     const recipe = await Recipe.create({
-      recipeName,
+      name,
       userId: user._id,
       ingredients,
-      instruction,
-      category,
-      contentUrl,
+      instructions,
+      description,
+      imageUrl:"fwfw",
     });
 
     await recipe.save();
@@ -21,6 +22,7 @@ exports.createRecipe = async (req, res) => {
       recipe,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: "Internal server error",
       error,
@@ -57,6 +59,8 @@ exports.updateRecipe = async (req, res) => {
 exports.deleteRecipe = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(req.params);
+    console.log("YUE");
     await Recipe.findByIdAndDelete({ _id: id });
     await Comment.deleteMany({ recipeId: id });
     return res.status(200).json({
@@ -70,7 +74,7 @@ exports.deleteRecipe = async (req, res) => {
   }
 };
 
-exports.getAllRecipe = async (req, res) => {
+exports.getAllRecipe = async (req, res) => { 
   try {
     const allRecipes = await Recipe.find({});
     return res.status(200).json({

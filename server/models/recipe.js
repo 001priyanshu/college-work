@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const recipeSchema = new mongoose.Schema(
   {
-    recipeName: {
+    name: {
       type: String,
       required: true,
     },
@@ -15,7 +15,7 @@ const recipeSchema = new mongoose.Schema(
         type: String,
       },
     ],
-    instruction: [
+    instructions: [
       {
         type: String,
       },
@@ -26,8 +26,8 @@ const recipeSchema = new mongoose.Schema(
         ref: "Comment",
       },
     ],
-    contentUrl: String,
-    category: String,
+    photoUrl: String,
+    description:String,
   },
   {
     timestamps: true,

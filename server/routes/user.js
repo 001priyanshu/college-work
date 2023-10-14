@@ -5,6 +5,7 @@ const { login, register, addFavRecipe } = require("../controllers/user");
 
 router.post("/signin", login);
 router.post("/signup", register);
-router.put("/addFavRecipe/:id", authentication, addFavRecipe);
+router.put("/addFavRecipe/:id", addFavRecipe);
+router.delete("/removeFavRecipe/:id", addFavRecipe);
 
 module.exports = router;
