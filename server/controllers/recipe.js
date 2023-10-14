@@ -3,17 +3,15 @@ const Comment = require("../models/comment");
 
 exports.createRecipe = async (req, res) => {
   try {
-    const { name, description,ingredients, instructions,imageUrl } =
-      req.body;
+    const { name, description, ingredients, instructions, imageUrl } = req.body;
     const user = req.body.userOwner;
-    console.log(user);
     const recipe = await Recipe.create({
       name,
       userId: user._id,
       ingredients,
       instructions,
       description,
-      imageUrl:"fwfw",
+      imageUrl,
     });
 
     await recipe.save();
@@ -74,7 +72,7 @@ exports.deleteRecipe = async (req, res) => {
   }
 };
 
-exports.getAllRecipe = async (req, res) => { 
+exports.getAllRecipe = async (req, res) => {
   try {
     const allRecipes = await Recipe.find({});
     return res.status(200).json({
