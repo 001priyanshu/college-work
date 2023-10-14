@@ -4,7 +4,7 @@ const Comment = require("../models/comment");
 exports.createRecipe = async (req, res) => {
   try {
     const { name, description, ingredients, instructions, imageUrl } = req.body;
-    const user = req.body.userOwner;
+    const user = req.user;
     const recipe = await Recipe.create({
       name,
       userId: user._id,
@@ -57,8 +57,6 @@ exports.updateRecipe = async (req, res) => {
 exports.deleteRecipe = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.params);
-    console.log("YUE");
     await Recipe.findByIdAndDelete({ _id: id });
     await Comment.deleteMany({ recipeId: id });
     return res.status(200).json({

@@ -12,12 +12,9 @@ app.use("/api/user", require("./routes/user"));
 app.use("/api/recipe", require("./routes/recipe"));
 app.use("/api/comment", require("./routes/comment"));
 
-
 app.listen(port, (err) => {
   if (err) {
     console.log("Error in starting the server :", err);
   }
   console.log(`Server is running at port ${port}`);
 });
-
-
