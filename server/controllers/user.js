@@ -77,9 +77,9 @@ exports.register = async (req, res) => {
 
 exports.addFavRecipe = async (req, res) => {
   
-  
+  console.log("fav");
   try {
-    console.log("******");
+    // console.log("******");
     const requestBody = JSON.parse(req.body.userID);
     const userId =requestBody._id;
     const  id  = req.body.recipeID;
@@ -88,7 +88,7 @@ exports.addFavRecipe = async (req, res) => {
  
     const loggedInUser = await User.findById({ _id:userId });
     loggedInUser.favRecipes.push(id);
-    console.log(loggedInUser);
+  
     loggedInUser.save();
     return res.status(200).json({
       message: "Success!",
@@ -104,19 +104,51 @@ exports.addFavRecipe = async (req, res) => {
 };
 
 exports.removeFavRecipe = async (req, res) => {
-  console.log("III");
-  console.log(req.body);
-  try {
-    const userId =requestBody._id;
-    const  id  = req.body.recipeID;
+  
+  
+  console.log("removeFav");
 
+  try {
+
+   const userId = JSON.parse(req.body.userID)
+   const recipeId = req.body.recipeID
+    // console.log(user._id,"UU")
+    // console.log(recipe,"RR");  
+  
     const loggedInUser = await User.findById(userId);
-    loggedInUser.favRecipes = loggedInUser.favRecipes.filter((recipe) => recipe.toString() !== id);
+    loggedInUser.favRecipes = loggedInUser.favRecipes.filter((recipe) => recipe.toString() !== recipeId);
     await loggedInUser.save();
 
     return res.status(200).json({
       message: "Removed from favorites successfully!",
       favoriteRecipes: loggedInUser.favRecipes,
+    });
+  } catch (error) {
+    console.log(error,"EEE");
+    return res.status(500).json({
+      message: "Internal server error",
+      error,
+    });
+  }
+};
+exports.getFavoriteRecipes = async (req, res) => {
+  console.log("III");
+  try {
+    const userID = req.params; // Get the user ID from the URL parameter
+     
+
+    const loggedInUser = await User.findById(userID.id);
+  
+    if (!loggedInUser) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
+    }
+
+    const favoriteRecipes = loggedInUser.favRecipes;
+    
+    return res.status(200).json({
+      favoriteRecipes,
     });
   } catch (error) {
     return res.status(500).json({
