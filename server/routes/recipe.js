@@ -12,7 +12,7 @@ const {
 router.post("/createRecipe", authentication, createRecipe);
 router.put("/updateRecipe/:id", authentication, updateRecipe);
 router.delete("/deleteRecipe/:id", authentication, deleteRecipe);
-router.get("/getAllRecipes", authentication, getAllRecipe);
+router.get("/getAllRecipes", getAllRecipe);
 router.get("/getMyRecipes", authentication, getMyRecipe);
 
 module.exports = router;
