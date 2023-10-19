@@ -79,7 +79,7 @@ exports.register = async (req, res) => {
 exports.addFavRecipe = async (req, res) => {
   try {
     const userId = req.user._id;
-    const id = req.body.recipeID;
+    const { id } = req.params;
 
     const loggedInUser = await User.findById({ _id: userId });
     loggedInUser.favRecipes.push(id);
@@ -100,7 +100,7 @@ exports.addFavRecipe = async (req, res) => {
 exports.removeFavRecipe = async (req, res) => {
   try {
     const userId = req.user._id;
-    const id = req.body.recipeID;
+    const { id } = req.params;
 
     const loggedInUser = await User.findById(userId);
     loggedInUser.favRecipes = loggedInUser.favRecipes.filter(
