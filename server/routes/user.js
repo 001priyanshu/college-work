@@ -13,6 +13,6 @@ router.post("/signin", login);
 router.post("/signup", register);
 router.put("/addFavRecipe/:id", authentication, addFavRecipe);
 router.put("/removeFavRecipe/:id", authentication, removeFavRecipe);
-
 router.get("/favoriteRecipes/:id", authentication, getFavoriteRecipes);
+
 module.exports = router;

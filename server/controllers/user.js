@@ -120,6 +120,7 @@ exports.removeFavRecipe = async (req, res) => {
     });
   }
 };
+
 exports.getFavoriteRecipes = async (req, res) => {
   try {
     const userID = req.params;

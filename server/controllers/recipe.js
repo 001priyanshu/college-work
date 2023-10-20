@@ -1,9 +1,12 @@
 const Recipe = require("../models/recipe");
+const User = require("../models//user");
 const Comment = require("../models/comment");
+const { use } = require("../routes/recipe");
 
 exports.createRecipe = async (req, res) => {
   try {
-    const { name, description, ingredients, instructions, imageUrl,mealType } = req.body;
+    const { name, description, ingredients, instructions, imageUrl, mealType } =
+      req.body;
     const user = req.user;
     const recipe = await Recipe.create({
       name,
@@ -59,6 +62,11 @@ exports.deleteRecipe = async (req, res) => {
     const { id } = req.params;
     await Recipe.findByIdAndDelete({ _id: id });
     await Comment.deleteMany({ recipeId: id });
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+    user.favRecipes = user.favRecipes.filter((Id) => String(Id) !== String(id));
+    await user.save();
+
     return res.status(200).json({
       message: "Successfully deleted recipe!",
     });
