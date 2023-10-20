@@ -32,10 +32,10 @@ exports.createRecipe = async (req, res) => {
 };
 
 exports.updateRecipe = async (req, res) => {
+
   try {
     const { name, description, ingredients, instructions, imageUrl, mealType } =
       req.body;
-
     const { id } = req.params;
     const recipe = await Recipe.findById({ _id: id });
     recipe.name = name;
@@ -81,7 +81,7 @@ exports.deleteRecipe = async (req, res) => {
 
 exports.getAllRecipe = async (req, res) => {
   try {
-    const recipes = await Recipe.find({});
+    const recipes = await Recipe.find({}).sort({ createdAt: -1 }); 
     const allRecipes = [];
 
     for (const item of recipes) {
@@ -124,6 +124,7 @@ exports.getAllRecipe = async (req, res) => {
   }
 };
 
+
 exports.getMyRecipe = async (req, res) => {
   try {
     const user = req.user;
@@ -144,7 +145,6 @@ exports.getRecipeById = async (req, res) => {
   try {
     const { id } = req.params; 
     const recipe = await Recipe.findById(id);
- console.log(recipe);
     if (!recipe) {
       return res.status(404).json({
         message: "Recipe not found",
