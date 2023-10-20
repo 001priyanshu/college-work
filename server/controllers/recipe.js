@@ -80,7 +80,37 @@ exports.deleteRecipe = async (req, res) => {
 
 exports.getAllRecipe = async (req, res) => {
   try {
-    const allRecipes = await Recipe.find({});
+    const recipes = await Recipe.find({});
+    const allRecipes = [];
+
+    for (const item of recipes) {
+      const commentsIds = item.comments;
+      const comments = [];
+
+      for (const id of commentsIds) {
+        const comment = await Comment.findById(id);
+
+        if (comment) {
+          const user = await User.findById(comment.userId, { name: 1, _id: 1 });
+
+          if (user) {
+            const commentDetail = {
+              content: comment.content,
+              user: user,
+            };
+            comments.push(commentDetail);
+          }
+        }
+      }
+
+      const recipeWithComments = {
+        ...item.toObject(),
+        comments: comments,
+      };
+
+      allRecipes.push(recipeWithComments);
+    }
+
     return res.status(200).json({
       message: "Success!",
       allRecipes,
