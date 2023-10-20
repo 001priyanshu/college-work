@@ -6,6 +6,10 @@ const recipeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    mealType: {
+      type: String,
+      required: true,
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -29,6 +33,7 @@ const recipeSchema = new mongoose.Schema(
     imageUrl: String,
     description: String,
   },
+  
   {
     timestamps: true,
   }

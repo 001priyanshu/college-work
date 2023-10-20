@@ -3,7 +3,7 @@ const Comment = require("../models/comment");
 
 exports.createRecipe = async (req, res) => {
   try {
-    const { name, description, ingredients, instructions, imageUrl } = req.body;
+    const { name, description, ingredients, instructions, imageUrl,mealType } = req.body;
     const user = req.user;
     const recipe = await Recipe.create({
       name,
@@ -12,6 +12,7 @@ exports.createRecipe = async (req, res) => {
       instructions,
       description,
       imageUrl,
+      mealType,
     });
 
     await recipe.save();
