@@ -43,7 +43,7 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
   try {
-    const { email, password, name } = req.body;
+    const { email, password, name, avatar } = req.body;
     const user = await User.findOne({ email });
 
     if (user) {
@@ -58,6 +58,9 @@ exports.register = async (req, res) => {
       email: email,
       password: hashedPassword,
       name: name,
+      avatar: avatar
+        ? avatar
+        : "https://firebasestorage.googleapis.com/v0/b/crwn-clothing-db-30a6b.appspot.com/o/images%2Favatar.png?alt=media&token=4b3ca852-40b4-4ad8-aa64-8fc3cd92e6c2",
       favRecipe: [],
     });
 
