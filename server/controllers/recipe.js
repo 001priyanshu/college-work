@@ -33,16 +33,17 @@ exports.createRecipe = async (req, res) => {
 
 exports.updateRecipe = async (req, res) => {
   try {
-    const { recipeName, ingredients, instruction, category, contentUrl } =
+    const { name, description, ingredients, instructions, imageUrl, mealType } =
       req.body;
 
     const { id } = req.params;
     const recipe = await Recipe.findById({ _id: id });
-    recipe.recipeName = recipeName;
+    recipe.name = name;
+    recipe.description = description;
     recipe.ingredients = ingredients;
-    recipe.instruction = instruction;
-    recipe.contentUrl = contentUrl;
-    recipe.category = category;
+    recipe.instructions = instructions;
+    recipe.imageUrl = imageUrl;
+    recipe.mealType = mealType;
 
     await recipe.save();
     return res.status(200).json({
@@ -130,6 +131,29 @@ exports.getMyRecipe = async (req, res) => {
     return res.status(200).json({
       message: "Success!",
       allRecipes,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal server error",
+      error,
+    });
+  }
+};
+
+exports.getRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params; 
+    const recipe = await Recipe.findById(id);
+ console.log(recipe);
+    if (!recipe) {
+      return res.status(404).json({
+        message: "Recipe not found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Success!",
+      recipe,
     });
   } catch (error) {
     return res.status(500).json({
